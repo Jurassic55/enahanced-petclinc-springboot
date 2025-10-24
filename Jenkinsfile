@@ -21,6 +21,25 @@ pipeline {
                     sh 'mvn compile'    
 
                 }
+                Stage ('sonar analysis') (
+                    environment{
+                        scanner_Home = tool 'Sonar-Scanner'
+                    }
+                    steps { 
+                        withSonarQubeEnv("sonarserver") {
+                            ssh'''$(SCANNER_HOME)/bin/sonar-scanner \
+                             -Dsonar.organisation=Jurassic55 \
+                             -Dsonar.projectName=springbootjavaapp
+                             -Dsonar.projectKey=jurassic55_springbootjavaapp
+                             -Dsonar.java.binaries=. \
+        
+                             '''
+
+
+                        }
+
+                    }
+                )
 }
     }
 }
