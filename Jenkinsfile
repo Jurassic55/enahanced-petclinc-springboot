@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    tools {
+        maven 'maven'
+    }
     stages {
             stage ('Checkout from GIT') {
                 steps {
@@ -7,5 +10,17 @@ pipeline {
 
                 }
             }
+            stage('compile with maven') {
+                steps {
+                    sh 'mvn validate'    
+
+                }
+            }
+             stage('validate with maven') {
+                steps {
+                    sh 'mvn compile'    
+
+                }
+}
     }
 }
