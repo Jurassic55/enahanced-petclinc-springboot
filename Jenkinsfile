@@ -1,20 +1,10 @@
 pipeline {
     agent any
     stages {
-        stage('Build') {
-            steps {
-                //
+            stage ('Checkout from GIT') {
+                steps {
+                    git branch: 'prod' , url 'https://github.com/Jurassic55/enahanced-petclinc-springboot.git'
+                }
             }
-        }
-        stage('Test') {
-            steps {
-                //
-            }
-        }
-        stage('Deploy') {
-            steps {
-                //
-            }
-        }
     }
 }
