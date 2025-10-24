@@ -30,6 +30,7 @@ pipeline {
             steps {
                 withSonarQubeEnv('sonarserver') {
                     sh '''$SCANNER_HOME/bin/sonar-scanner \
+                        -Dsonar.organization=exact-org-key
                         -Dsonar.projectName=springbootjavaapp \
                         -Dsonar.projectKey=jurassic55_springbootjavaapp \
                         -Dsonar.sources=. \
