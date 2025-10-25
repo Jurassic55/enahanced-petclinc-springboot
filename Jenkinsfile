@@ -13,6 +13,8 @@ pipeline {
         ACR_LOGIN_SERVER = 'springbootdockerreg222.azurecr.io'
         FULL_IMAGE_NAME = "${ACR_LOGIN_SERVER}/${IMAGE_NAME}:${IMAGE_TAG}"
         SCANNER_HOME = tool 'sonar-scanner'
+        RG          = 'rgdemo'
+        NAME = 'myAKSCluster'
     }
 
     stages {
@@ -103,8 +105,31 @@ pipeline {
                 }
             }
         }
+               stage('Azure Login to AKR') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'azure-acr-spn',
+                                                 usernameVariable: 'AZURE_USERNAME',
+                                                 passwordVariable: 'AZURE_PASSWORD')]) {
+                    script {
+                        echo "Logging in to AKS"
+                        sh """
+                            az login --service-principal -u $AZURE_USERNAME -p $AZURE_PASSWORD --tenant $TENANT_ID
+                            az aks get-credentials --resource group $RG --name $NAME --overwrite-existing
+                        """
+                    }
     }
 }
-
+    stage('Azure Login to AKR') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'azure-acr-spn',
+                                                 usernameVariable: 'AZURE_USERNAME',
+                                                 passwordVariable: 'AZURE_PASSWORD')]) {
+                    script {
+                        echo "Deploy to AKS Cluster"
+                        sh """
+                            az login --service-principal -u $AZURE_USERNAME -p $AZURE_PASSWORD --tenant $TENANT_ID
+                            kubectl apply -f k8s/sprinboot-deployment.yaml
+                        """
+                    }
     
 
