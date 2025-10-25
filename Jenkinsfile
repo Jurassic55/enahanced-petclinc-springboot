@@ -50,13 +50,15 @@ pipeline {
             }
         }
     }
-    stage('Docker Build') {
-        steps {
-            script {
-                echo "Building Docker Image....."
-                docker.build ("${IMAGE_NAME}:{IMAGE_TAG}")
-            }
-        }
+    stage('Build Docker Image') {
+    environment {
+        IMAGE_NAME = 'springbootapp:latest'
     }
+    steps {
+        sh "docker build -t $IMAGE_NAME ."
     }
 }
+            }
+        }
+    
+
