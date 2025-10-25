@@ -38,5 +38,25 @@ pipeline {
                 }
             }
         }
+    stage ('maven package') {
+        steps {
+            sh 'mvn package'
+        }
+    }
+    stage('Sonar Quality Gate') {
+        steps {
+            timeout(time: 1,unit: 'MINUTES') {
+                waitForQualityGate abortpipeline: true, credentialsID: 'sonar'
+            }
+        }
+    }
+    stage('Docker Build') {
+        steps {
+            script {
+                echo "Building Docker Image....."
+                docker.build ("${IMAGE_NAME}:{IMAGE_TAG}")
+            }
+        }
+    }
     }
 }
