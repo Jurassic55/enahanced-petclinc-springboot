@@ -112,7 +112,7 @@ pipeline {
         stage('Deploy to AKS') {
             steps {
                 script {
-                    sh 'kubectl apply -f enahanced-petclinc-springboot/k8s/sprinboot-deployment.yaml'
+                    sh 'kubectl apply -f enahanced-petclinc-springboot/k8s/springboot-deployment.yaml'
                 }
             }
         }
