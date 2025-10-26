@@ -112,7 +112,7 @@ pipeline {
         stage('Deploy to AKS') {
             steps {
                 script {
-                    sh 'kubectl apply -f k8s/springboot-deployment.yaml'
+                    sh 'kubectl apply -f k8s/sprinboot-deployment.yaml'
                 }
             }
         }
