@@ -12,7 +12,7 @@ pipeline {
         ACR_NAME        = 'springbootdockerreg222'
         ACR_LOGIN_SERVER= 'springbootdockerreg222.azurecr.io'
         FULL_IMAGE_NAME = "${ACR_LOGIN_SERVER}/${IMAGE_NAME}:${IMAGE_TAG}"
-        SCANNER_HOME    = tool 'sonar'
+        SCANNER_HOME    = tool 'sonar-scanner'
         RG              = 'rgdemo'
         AKS_NAME        = 'myAKSCluster'
     }
